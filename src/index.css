@@ -4,91 +4,49 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --bg-color: #fafbfc;
-    --surface-color: #ffffff;
-    --fg-color: #1a1a2e;
-    --muted-color: rgba(26, 26, 46, 0.58);
-    --primary-color: #5b5fc7;
-    --accent-color: #7dd3c0;
-    --ring-color: rgba(26, 26, 46, 0.06);
-    --blob-a: #c9b6f5;
-    --blob-b: #7dd3c0;
-  }
-
   html, body, #root {
-    background: var(--bg-color);
-    color: var(--fg-color);
+    background: #f5f3ee;
+    color: #0d0d0d;
     min-height: 100vh;
-    font-family: 'Cairo', 'Inter', sans-serif;
+    font-family: 'Cairo', sans-serif;
     scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', 'Cairo', sans-serif;
-    letter-spacing: -0.02em;
+  /* Paper Editorial Typography Mapping */
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: 'Amiri', serif;
+    letter-spacing: -0.01em;
   }
 
-  /* Custom Scrollbar */
+  .drop-cap::first-letter {
+    font-size: 4.5em;
+    float: right;
+    line-height: 0.8;
+    margin-left: 0.15em;
+    margin-top: 0.05em;
+    color: #c9a84c;
+    font-family: 'Amiri', serif;
+  }
+
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--bg-color);
+    background: #f5f3ee;
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--ring-color);
+    background: rgba(13, 13, 13, 0.2);
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--muted-color);
+    background: rgba(13, 13, 13, 0.4);
   }
 }
 
 @layer utilities {
-  .ds-bg { background-color: #fafbfc; }
-  .ds-surface { 
-    background-color: #ffffff; 
-    border: 1px solid rgba(26,26,46,0.06); 
-    color: #1a1a2e;
-  }
-  .ds-fg { color: #1a1a2e; }
-  .ds-muted { color: rgba(26,26,46,0.58); }
-  .ds-primary-btn {
-    background-color: #5b5fc7;
-    color: #ffffff;
-    transition: all 0.2s ease;
-  }
-  .ds-primary-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.2);
-  }
-  .ds-secondary-btn {
-    background-color: transparent;
-    color: #1a1a2e;
-    border: 1px solid rgba(26,26,46,0.06);
-    transition: all 0.2s ease;
-  }
-  .ds-secondary-btn:hover {
-    transform: translateY(-1px);
-    background-color: rgba(26,26,46,0.02);
-  }
-  .ds-card {
-    background-color: #ffffff;
-    border-radius: 16px;
-    border: 1px solid rgba(26,26,46,0.06);
-    box-shadow: 0 2px 8px rgba(26,26,46,0.02);
-    transition: all 0.2s ease;
-  }
-  .ds-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26,26,46,0.04);
-  }
-  .ds-pill {
-    border-radius: 9999px;
-  }
-  .ds-radius {
-    border-radius: 16px;
+  .fw-rule {
+    border-top: 1px solid rgba(13,13,13,0.08);
+    border-bottom: 1px solid rgba(13,13,13,0.08);
   }
 }
