@@ -1,227 +1,166 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowUpLeft, Play, Quote, Award, Music as MusicIcon, Clock } from "lucide-react";
+import { Play, Music, Mic2, Star, TrendingUp, Users, Radio } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import { aiImage } from "@/lib/deapi";
-import { SafeImage } from "@/components/SafeImage";
+import { AuroraBackground } from "@/components/Backgrounds";
+import { img, avatar } from "@/lib/img";
 
-const P = { bg: '#0d0d0d', fg: '#f0d78c', primary: '#c9a84c', muted: 'rgba(240,215,140,0.55)', ring: 'rgba(201,168,76,0.2)' };
+const Home = () => {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, 100]);
 
-// Live Background 1: Aurora (Mandatory for Hero)
-const AuroraBackground = () => (
-  <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-    <motion.div
-      animate={{
-        scale: [1, 1.2, 1],
-        x: [0, 50, 0],
-        y: [0, -30, 0],
-      }}
-      transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full blur-3xl mix-blend-screen opacity-40"
-      style={{ background: 'radial-gradient(circle, #c9a84c 0%, transparent 70%)' }}
-    />
-    <motion.div
-      animate={{
-        scale: [1, 1.5, 1],
-        x: [0, -60, 0],
-        y: [0, 60, 0],
-      }}
-      transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full blur-3xl mix-blend-screen opacity-30"
-      style={{ background: 'radial-gradient(circle, #1a1a1a 0%, transparent 70%)' }}
-    />
-  </div>
-);
-
-// Number Counter for Stats
-const AnimatedCounter = ({ value, label, suffix = "" }: { value: number, label: string, suffix?: string }) => {
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="flex flex-col items-center justify-center p-8 glass-card text-center"
-    >
-      <span className="font-heading text-5xl md:text-6xl mb-2" style={{ color: P.primary }}>
-        {value}{suffix}
-      </span>
-      <span className="text-sm tracking-widest uppercase text-muted-gold">{label}</span>
-    </motion.div>
-  );
-};
-
-export default function Home() {
-  const [heroImg, setHeroImg] = useState<string>("");
-  const [quoteImg, setQuoteImg] = useState<string>("");
-
-  useEffect(() => {
-    aiImage("cinematic majestic black and white portrait of Umm Kulthum singing on stage, 1960s, gold spotlight, elegant, high contrast, Noir aesthetic", {w:1200,h:800}).then(setHeroImg);
-    aiImage("vintage gold accented microphone on a dark stage, shadow of a singer, noir", {w:600,h:800}).then(setQuoteImg);
-  }, []);
-
-  const features = [
-    { num: "I", title: "صوت الخلود", desc: "امتدت مسيرتها الاستثنائية لأكثر من 50 عاماً، قدمت خلالها مئات الأعمال التي لا تزال تُسمع حتى اليوم.", icon: <MusicIcon size={24} color={P.primary}/> },
-    { num: "II", title: "حفلات الخميس", desc: "كانت حفلاتها الشهرية بمثابة طقس قومي يجمع ملايين العرب من المحيط إلى الخليج خلف المذياع.", icon: <Clock size={24} color={P.primary}/> },
-    { num: "III", title: "أوسمة ونياشين", desc: "نالت أرفع الأوسمة من ملوك ورؤساء الدول العربية تقديراً لدورها الفني والوطني البارز.", icon: <Award size={24} color={P.primary}/> }
+  const stats = [
+    { label: "سنوات العطاء", value: "50+", icon: Star, color: "#c9b6f5", sparkline: [10, 20, 15, 30, 45, 50, 48, 55] },
+    { label: "أغنية مسجلة", value: "300+", icon: Mic2, color: "#7dd3c0", sparkline: [5, 12, 25, 40, 80, 150, 220, 310] },
+    { label: "حفلات مباشرة", value: "1,200", icon: Users, color: "#ffb0d2", sparkline: [20, 40, 60, 80, 100, 120, 110, 130] },
+    { label: "مدة أطول كونسرت", value: "5 س", icon: Radio, color: "#ffd28c", sparkline: [1, 2, 3, 2, 4, 3, 5, 4] },
   ];
 
   return (
-    <div style={{ background: P.bg, color: P.fg }} className="relative z-10 w-full overflow-hidden">
+    <div className="min-h-[200vh] relative z-0 pb-32">
       <AuroraBackground />
+      
+      {/* Hero Section */}
+      <section className="relative pt-24 pb-16 px-6 md:px-12 max-w-7xl mx-auto">
+        <motion.div 
+          style={{ y }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[rgba(26,26,46,0.06)] mb-6 shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-[#7dd3c0] animate-pulse"></span>
+            <span className="text-xs font-semibold text-[rgba(26,26,46,0.6)]">لوحة التوثيق الرسمية</span>
+          </div>
+          <h1 className="text-[clamp(40px,6vw,72px)] font-bold leading-[1.1] text-[#1a1a2e] mb-6 tracking-tight">
+            صوت مصر الخالد، <br />
+            <span className="text-[#5b5fc7] italic font-serif">كوكب الشرق</span> الساطع.
+          </h1>
+          <p className="text-lg md:text-xl text-[rgba(26,26,46,0.6)] leading-relaxed max-w-2xl mb-10">
+            اكتشف سيرة فاطمة إبراهيم السيد البلتاجي، أيقونة الغناء العربي التي وحدت بصوتها ملايين القلوب من المحيط إلى الخليج عبر نصف قرن من الإبداع.
+          </p>
+          <div className="flex items-center gap-4">
+            <Link to="/discography" className="ds-primary-btn px-8 py-3.5 rounded-xl font-semibold flex items-center gap-2">
+              <Play size={18} fill="currentColor" />
+              استمع للروائع
+            </Link>
+            <Link to="/chat" className="ds-secondary-btn py-3.5 px-6 rounded-xl font-semibold flex items-center gap-2 bg-white">
+              <MessageSquareIcon size={18} />
+              اسأل الذكاء الاصطناعي
+            </Link>
+          </div>
+        </motion.div>
+      </section>
 
-      {/* HERO SECTION */}
-      <section className="relative z-10 min-h-[90vh] flex flex-col justify-center max-w-[1240px] mx-auto px-6 md:px-10 py-24 md:py-32" style={{ background: P.bg, color: P.fg }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-6"
-          >
-            <div className="flex items-center gap-4">
-              <span className="w-12 h-[1px]" style={{ background: P.primary }}></span>
-              <span className="tracking-[0.2em] text-sm font-semibold uppercase" style={{ color: P.primary }}>كوكب الشرق</span>
-            </div>
-            
-            <h1 className="font-heading text-[clamp(48px,8vw,112px)] leading-[1] tracking-[-0.02em]">
-              أُم <br/> <i className="font-light italic text-muted-gold">كُلثُوم</i>
-            </h1>
-            
-            <p className="text-[16px] md:text-[18px] leading-[1.8] max-w-lg text-muted-gold mt-4">
-              الأسطورة الخالدة التي وحدت العرب بصوتها. حنجرة ذهبية صاغت وجدان أمة كاملة عبر عقود من العطاء الفني المتفرد، لتظل حتى يومنا هذا الهرم الرابع لمصر.
-            </p>
-
-            <div className="flex flex-wrap gap-4 mt-8">
-              <Link to="/discography" className="group flex items-center gap-3 px-8 py-4 btn-primary transition-all hover:scale-[1.02]">
-                استمع لروائعها
-                <ArrowUpLeft size={18} className="transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1" />
-              </Link>
-              <Link to="/biography" className="flex items-center gap-3 px-8 py-4 btn-secondary hover:bg-[rgba(201,168,76,0.1)] transition-colors">
-                اكتشف سِيرتها
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Hero Image Parallax */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, delay: 0.2 }}
-            className="relative lg:h-[700px] h-[500px] w-full rounded-sm overflow-hidden border p-2 glass-card"
-          >
-            <div className="w-full h-full relative overflow-hidden bg-[#111]">
-              <SafeImage 
-                src={heroImg} 
-                fallbackSeed="umm-kulthum-stage-vintage" 
-                className="w-full h-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-700"
-                alt="Umm Kulthum on stage"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-60"></div>
-            </div>
-            
-            {/* Floating widget */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1 }}
-              className="absolute bottom-10 left-10 glass-card p-4 flex items-center gap-4 hidden md:flex"
+      {/* Stats Widgets (Signature Design) */}
+      <section className="px-6 md:px-12 max-w-7xl mx-auto mb-20 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {stats.map((stat, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="ds-card p-6 relative overflow-hidden group"
             >
-              <div className="w-12 h-12 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform" style={{ background: P.primary }}>
-                <Play fill="#0d0d0d" color="#0d0d0d" size={20} className="ml-1" />
+              <div className="flex justify-between items-start mb-4">
+                <div 
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110"
+                  style={{ backgroundColor: `${stat.color}30`, color: stat.color > '#fff' ? '#1a1a2e' : stat.color.replace('30','90') }}
+                >
+                  <stat.icon size={24} style={{ color: '#1a1a2e' }} />
+                </div>
+                <TrendingUp size={16} className="text-[rgba(26,26,46,0.3)]" />
               </div>
-              <div>
-                <p className="text-sm font-bold" style={{ color: P.fg }}>أنت عمري</p>
-                <p className="text-xs text-muted-gold">ألحان محمد عبد الوهاب</p>
+              <h3 className="text-[rgba(26,26,46,0.5)] text-sm font-medium mb-1">{stat.label}</h3>
+              <p className="text-3xl font-bold text-[#1a1a2e]">{stat.value}</p>
+              
+              {/* Sparkline decoration */}
+              <div className="absolute bottom-0 left-0 right-0 h-10 opacity-20 pointer-events-none flex items-end">
+                {stat.sparkline.map((val, idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex-1 bg-[#1a1a2e] rounded-t-sm mx-[1px]" 
+                    style={{ height: `${(val / Math.max(...stat.sparkline)) * 100}%`, backgroundColor: stat.color }}
+                  />
+                ))}
               </div>
             </motion.div>
-          </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* STATS SECTION */}
-      <section className="relative z-10 py-24 border-y" style={{ background: P.bg, color: P.fg, borderColor: P.ring }}>
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <AnimatedCounter value={300} suffix="+" label="أغنية مسجلة" />
-            <AnimatedCounter value={50} suffix=" عاماً" label="من العطاء الفني" />
-            <AnimatedCounter value={100} suffix="+" label="حفلة تاريخية" />
+      {/* Bento Grid: Featured Content */}
+      <section className="px-6 md:px-12 max-w-7xl mx-auto mb-20 relative z-10">
+        <h2 className="text-2xl font-bold mb-8">محطات مضيئة</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[280px]">
+          {/* Card 1 */}
+          <div className="ds-card md:col-span-2 p-8 flex flex-col justify-end relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a2e] to-transparent z-10 opacity-80" />
+            <img src={img("vintage concert", 800, 600)} alt="Concert" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <div className="relative z-20 text-white">
+              <span className="px-3 py-1 text-xs font-semibold bg-[#7dd3c0] text-[#1a1a2e] rounded-full inline-block mb-3">حفلات باريس</span>
+              <h3 className="text-2xl font-bold mb-2">أولمبيا باريس 1967</h3>
+              <p className="text-white/80 max-w-md text-sm leading-relaxed">تعتبر حفلتها في مسرح الأولمبيا في باريس من أهم المحطات العالمية، حيث غنت وتبرعت بإيراداتها للمجهود الحربي.</p>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* VALUE PROPS / FEATURES */}
-      <section className="relative z-10 py-32" style={{ background: P.bg, color: P.fg }}>
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10">
-          <div className="mb-20">
-            <span className="font-mono text-xs tracking-widest text-muted-gold">01 / التميز</span>
-            <h2 className="font-heading text-[clamp(32px,4.5vw,56px)] mt-4 max-w-2xl">لماذا سُميت بـ <span style={{ color: P.primary }}>الهرم الرابع</span>؟</h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {features.map((feat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="glass-card p-10 flex flex-col group hover:bg-[rgba(255,255,255,0.05)] transition-colors"
-              >
-                <div className="flex justify-between items-start mb-8">
-                  <div className="p-4 rounded-sm" style={{ background: 'rgba(201,168,76,0.1)' }}>
-                    {feat.icon}
-                  </div>
-                  <span className="font-heading text-4xl text-muted-gold opacity-30 group-hover:opacity-100 transition-opacity">{feat.num}</span>
-                </div>
-                <h3 className="text-2xl font-bold mb-4">{feat.title}</h3>
-                <p className="text-muted-gold leading-relaxed">
-                  {feat.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* QUOTE SECTION (ASYMMETRICAL BENTO) */}
-      <section className="relative z-10 py-32 border-t" style={{ background: P.bg, color: P.fg, borderColor: P.ring }}>
-        <div className="max-w-[1240px] mx-auto px-6 md:px-10 grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="lg:col-span-8 glass-card p-12 md:p-20 flex flex-col justify-center relative overflow-hidden"
-          >
-            <Quote size={120} className="absolute -top-10 -right-10 opacity-5" color={P.primary} />
-            <h3 className="font-heading text-3xl md:text-5xl leading-[1.4] mb-8 relative z-10">
-              "إن الفن ليس مجرد أغنية نغنيها، بل هو رسالة نؤديها... وهو في النهاية التعبير الأصدق عن روح الشعب الأصيلة."
-            </h3>
-            <div className="flex items-center gap-4">
-              <span className="w-8 h-[2px]" style={{ background: P.primary }}></span>
-              <span className="font-bold tracking-wider">أم كلثوم</span>
+          {/* Card 2 */}
+          <div className="ds-card p-8 bg-[#f3f4fa] flex flex-col justify-between group">
+            <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center">
+              <Music className="text-[#5b5fc7]" />
             </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-4 h-[400px] lg:h-auto rounded-sm overflow-hidden border relative"
-            style={{ borderColor: P.ring }}
-          >
-            <SafeImage src={quoteImg} fallbackSeed="vintage-mic-singer" className="w-full h-full object-cover mix-blend-luminosity grayscale hover:grayscale-0 transition-all duration-700" alt="Vintage mic" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] to-transparent opacity-80" />
-            <div className="absolute bottom-6 right-6">
-              <p className="font-heading text-xl" style={{ color: P.primary }}>أيقونة عصرها</p>
+            <div>
+              <h3 className="text-xl font-bold mb-2">لقاء السحاب</h3>
+              <p className="text-sm text-[rgba(26,26,46,0.6)] mb-4 leading-relaxed">أخيراً، اجتمعت أم كلثوم مع الموسيقار محمد عبد الوهاب في تحفة "إنت عمري" بعد سنوات من التنافس.</p>
+              <Link to="/discography" className="text-xs font-bold text-[#5b5fc7] flex items-center gap-1 group-hover:gap-2 transition-all">
+                استكشف الأغنية &larr;
+              </Link>
             </div>
-          </motion.div>
+          </div>
 
+          {/* Card 3 */}
+          <div className="ds-card p-8 flex flex-col items-center justify-center text-center bg-[#c9b6f5]/10 border-[#c9b6f5]/30">
+            <div className="flex -space-x-4 mb-4 rtl:space-x-reverse">
+              {[1, 2, 3, 4].map(i => (
+                <img key={i} src={avatar(`poet-${i}`)} className="w-10 h-10 rounded-full border-2 border-white shadow-sm" alt="Poet" />
+              ))}
+            </div>
+            <h3 className="font-bold text-lg mb-1">شعراء العصر الماسي</h3>
+            <p className="text-xs text-[rgba(26,26,46,0.6)] max-w-[200px]">أحمد رامي، أحمد شوقي، بيرم التونسي، ومرسي جميل عزيز.</p>
+          </div>
+
+          {/* Card 4 */}
+          <div className="ds-card md:col-span-2 p-8 flex items-center gap-8 bg-white">
+            <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-[#7dd3c0]/40 to-[#5b5fc7]/40 flex-shrink-0 flex items-center justify-center relative overflow-hidden">
+               <div className="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center pl-1">
+                 <Play className="text-[#1a1a2e]" />
+               </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                <span className="text-xs font-bold text-red-500">مختارات اليوم</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-2">الأطلال</h3>
+              <p className="text-sm text-[rgba(26,26,46,0.6)] mb-4">قصيدة إبراهيم ناجي، ألحان رياض السنباطي. من أروع ما غنت في تاريخ الموسيقى العربية.</p>
+              <div className="w-full h-1 bg-[rgba(26,26,46,0.06)] rounded-full overflow-hidden">
+                <div className="h-full w-1/3 bg-[#5b5fc7] rounded-full"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
     </div>
   );
+};
+
+// Helper icon component since it wasn't imported directly above
+function MessageSquareIcon(props: any) {
+  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>;
 }
+
+export default Home;
