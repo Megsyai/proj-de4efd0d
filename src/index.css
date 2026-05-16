@@ -4,86 +4,91 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --bg-color: #fafbfc;
+    --surface-color: #ffffff;
+    --fg-color: #1a1a2e;
+    --muted-color: rgba(26, 26, 46, 0.58);
+    --primary-color: #5b5fc7;
+    --accent-color: #7dd3c0;
+    --ring-color: rgba(26, 26, 46, 0.06);
+    --blob-a: #c9b6f5;
+    --blob-b: #7dd3c0;
+  }
+
   html, body, #root {
-    background: #0d0d0d;
-    color: #f0d78c;
+    background: var(--bg-color);
+    color: var(--fg-color);
     min-height: 100vh;
     font-family: 'Cairo', 'Inter', sans-serif;
-    direction: rtl;
     scroll-behavior: smooth;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-heading {
-    font-family: 'Amiri', 'Playfair Display', serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', 'Cairo', sans-serif;
+    letter-spacing: -0.02em;
   }
 
-  /* Custom Scrollbar for Noir & Gold */
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0d0d0d;
+    background: var(--bg-color);
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(201,168,76,0.3);
-    border-radius: 0px;
+    background: var(--ring-color);
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(201,168,76,0.6);
+    background: var(--muted-color);
   }
 }
 
 @layer utilities {
-  .glass-card {
-    background: rgba(255,255,255,0.03);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(201,168,76,0.2);
-    color: #f0d78c;
-    border-radius: 8px;
+  .ds-bg { background-color: #fafbfc; }
+  .ds-surface { 
+    background-color: #ffffff; 
+    border: 1px solid rgba(26,26,46,0.06); 
+    color: #1a1a2e;
   }
-  
-  .text-muted-gold {
-    color: rgba(240,215,140,0.55);
+  .ds-fg { color: #1a1a2e; }
+  .ds-muted { color: rgba(26,26,46,0.58); }
+  .ds-primary-btn {
+    background-color: #5b5fc7;
+    color: #ffffff;
+    transition: all 0.2s ease;
   }
-
-  .btn-primary {
-    background: #c9a84c;
-    color: #0a0a0a;
-    border-radius: 0px;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 600;
+  .ds-primary-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(91, 95, 199, 0.2);
   }
-  
-  .btn-secondary {
-    background: transparent;
-    color: #f0d78c;
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 0px;
-    font-family: 'Cairo', sans-serif;
+  .ds-secondary-btn {
+    background-color: transparent;
+    color: #1a1a2e;
+    border: 1px solid rgba(26,26,46,0.06);
+    transition: all 0.2s ease;
   }
-
-  .gold-underline {
-    position: relative;
-    text-decoration: none;
+  .ds-secondary-btn:hover {
+    transform: translateY(-1px);
+    background-color: rgba(26,26,46,0.02);
   }
-  .gold-underline::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    bottom: -2px;
-    left: 0;
-    background-color: #c9a84c;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.3s ease-out;
+  .ds-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(26,26,46,0.06);
+    box-shadow: 0 2px 8px rgba(26,26,46,0.02);
+    transition: all 0.2s ease;
   }
-  .gold-underline:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+  .ds-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,26,46,0.04);
   }
-  
-  .active-nav-link {
-    border-bottom: 1px solid #c9a84c;
+  .ds-pill {
+    border-radius: 9999px;
+  }
+  .ds-radius {
+    border-radius: 16px;
   }
 }
